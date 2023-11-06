@@ -234,6 +234,7 @@ export const PopupContainer = styled.div`
   border-radius: 5px;
   width: 90%;
   max-width: 500px;
+  top: 0px;
   @media (max-width: 600px) {
     border-radius: 0;
     height: 100vh;
@@ -248,7 +249,7 @@ export const TitleBar = styled.div`
   font-weight: 700;
   position: relative;
   @media (max-width: 600px) {
-    padding-top: 40px;
+    padding-top: 60px;
     padding-bottom: 20px;
   }
 `;

@@ -196,8 +196,10 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
         <LabelStyled>Nama Lengkap</LabelStyled>
         <FieldContainer
           onClick={() => {
-            setEditName(true);
-            handleCancel();
+            if (!isFavorite) {
+              setEditName(true);
+              handleCancel();
+            }
           }}
         >
           <NameStyled>{`${currentContact.first_name} ${currentContact.last_name}`}</NameStyled>
@@ -230,7 +232,13 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
             </ContactEditContainer>
           </>
         ) : (
-          <FieldContainer onClick={() => handleEdit(index)}>
+          <FieldContainer
+            onClick={() => {
+              if (!isFavorite) {
+                handleEdit(index);
+              }
+            }}
+          >
             <NameStyled>{`${phone}`}</NameStyled>
             {!isFavorite && <ButtonTextSmall>Ubah</ButtonTextSmall>}
           </FieldContainer>
@@ -278,7 +286,6 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
           </div>
           {renderPhoneNumbers()}
           {error && <p>{textErrorAddingPhone}</p>}
-
           {isEditing ? (
             <ButtonFullwidth>
               <InnerButtonContain onClick={handleEditSave}>
