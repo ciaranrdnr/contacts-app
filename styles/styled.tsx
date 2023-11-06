@@ -248,7 +248,8 @@ export const TitleBar = styled.div`
   font-weight: 700;
   position: relative;
   @media (max-width: 600px) {
-    margin: 20px 0;
+    padding-top: 40px;
+    padding-bottom: 20px;
   }
 `;
 
