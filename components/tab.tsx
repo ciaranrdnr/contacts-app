@@ -23,7 +23,6 @@ const Tabs = ({ activeTab, onClick, tabs }: ITabProps) => {
           onClick={() => onClick(id)}
         >
           {tabName.charAt(0).toUpperCase() + tabName.slice(1)}{" "}
-          {/* Capitalize the first letter */}
         </TabStyled>
       ))}
     </TabContainerStyled>

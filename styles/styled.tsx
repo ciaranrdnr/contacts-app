@@ -28,6 +28,7 @@ export const HeaderStyled = styled.div`
 export const ButtonTextStyled = styled.button`
   color: ${(props) => props.theme.colors.GN500};
   font-weight: 700;
+  font-size: 14px;
   background: none;
   border: none;
   cursor: pointer;
@@ -52,6 +53,7 @@ export const TabStyled = styled.button<ITabStyledProps>`
   cursor: pointer;
   outline: none;
   font-weight: 700;
+  font-size: 16px;
 
   border-bottom: ${(props) => (props.isActive ? "3px solid green" : "none")};
   color: ${(props) => (props.isActive ? "green" : "grey")};

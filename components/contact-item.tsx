@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-// import React from "react";
 import { IContact } from "@/helpers/contact-helper";
 import {
   ButtonFullwidth,

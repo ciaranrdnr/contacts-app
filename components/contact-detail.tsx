@@ -95,7 +95,6 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
       });
       setCurrentContact(data.update_contact_by_pk);
       setEditName(false);
-      // router.reload()
     } catch (e) {
       console.error("Error updating contact name", e);
     }

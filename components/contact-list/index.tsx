@@ -73,9 +73,7 @@ const ContactList = () => {
     onCompleted: () => refetch(),
   });
 
-  useEffect(() => {
-    syncStateWithLocalStorage(setContacts, setFavorites);
-  }, []);
+  
 
   const handleOpenPopup = (contact: IContact) => {
     setSelectedContact(contact);
@@ -146,13 +144,12 @@ const ContactList = () => {
   };
 
   const filteredContacts = handleContactsFilter(contacts, searchTerm);
-  // Pagination and search handlers
 
   const handlePageChange = (page: number) => setCurrentPage(page);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
-    setCurrentPage(0); // Reset to the first page when searching
+    setCurrentPage(0); 
   };
 
   const ContactItems = ({ isFavorite }: { isFavorite?: boolean }) => {
@@ -179,11 +176,22 @@ const ContactList = () => {
     );
   };
 
+  useEffect(() => {
+    syncStateWithLocalStorage(setContacts, setFavorites);
+  }, []);
+
+  useEffect(()=>{
+    if(selectedContact ||showPopupAdd ){
+      document.body.style.overflow = 'hidden';
+    }
+  },[selectedContact,showPopupAdd])
+
+
   if (getLoading) return <EmptyContact>Loading...</EmptyContact>;
-  if (error) return <p>Maaf, terjadi error saat load Kontak kamu</p>;
+  if (error) return <p>Maaf, gagal menampilkan kontak</p>;
 
   return (
-    <div css={{ position: "relative", maxWidth: "600px", margin: "auto" }}>
+    <div css={{ position: "relative", maxWidth: "600px", margin: "auto"}}>
       <div
         css={{ position: "sticky", top: 0, background: "white", zIndex: 10 }}
       >
