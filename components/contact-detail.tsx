@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { css } from "@emotion/react";
-import { EDIT_QUERY } from "./../lib/queries";
+import { EDIT_QUERY } from "@/lib/queries";
 import { IContact, IPhone } from "@/helpers/contact-helper";
 import AddPhoneNumber from "./add-contact";
 import { useRouter } from "next/router";

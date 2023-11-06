@@ -15,18 +15,25 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "facepaint": "^1.2.1",
+    "file-loader": "^6.2.0",
     "graphql": "^16.8.1",
     "next": "14.0.1",
     "react": "^18",
     "react-dom": "^18",
-    "react-icons": "^4.11.0"
+    "react-icons": "^4.11.0",
+    "webpack": "^5.89.0"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^14.0.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "clean-webpack-plugin": "^4.0.0",
+    "compression-webpack-plugin": "^10.0.0",
     "eslint": "^8",
     "eslint-config-next": "14.0.1",
-    "typescript": "^5"
+    "terser-webpack-plugin": "^5.3.9",
+    "typescript": "^5",
+    "url-loader": "^4.1.1"
   }
 }

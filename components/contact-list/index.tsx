@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
-import ContactItem from "@/components/contact-item";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import Pagination from "@/components/pagination";
 import Search from "@/components/search";
 import { ADD_QUERY, DELETE_QUERY, GET_QUERY } from "@/lib/queries";
@@ -30,9 +29,9 @@ import {
   HeadingStyled,
 } from "@/styles/styled";
 
-import { css } from "@emotion/react";
-import Tabs from "../tab";
-import LoadingState from "../loading-state";
+import Tabs from "@/components/tab";
+import LoadingState from "@/components/loading-state";
+import ContactItems from "@/components/contact-items";
 
 const ContactList = () => {
   const PAGE_SIZE = 5;
@@ -51,16 +50,14 @@ const ContactList = () => {
     setContacts(contacts);
   };
 
-  const {
-    loading: getLoading,
-    error,
-    data,
-    refetch,
-  } = useQuery(GET_QUERY.CONTACT_LIST, {
-    onCompleted: (data) => {
-      updateContactsState(data.contact);
-    },
-  });
+  const [getContacts, { loading: getLoading, error, data }] = useLazyQuery(
+    GET_QUERY.CONTACT_LIST,
+    {
+      onCompleted: (data) => {
+        updateContactsState(data.contact);
+      },
+    }
+  );
 
   const [addContactWithPhones, { loading: addLoading }] = useMutation(
     ADD_QUERY.CONTACT_WITH_PHONE,
@@ -70,11 +67,7 @@ const ContactList = () => {
     }
   );
 
-  const [deleteContact] = useMutation(DELETE_QUERY.CONTACT_MUTATION, {
-    onCompleted: () => refetch(),
-  });
-
-  
+  const [deleteContact] = useMutation(DELETE_QUERY.CONTACT_MUTATION);
 
   const handleOpenPopup = (contact: IContact) => {
     setSelectedContact(contact);
@@ -150,52 +143,37 @@ const ContactList = () => {
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
-    setCurrentPage(0); 
-  };
-
-  const ContactItems = ({ isFavorite }: { isFavorite?: boolean }) => {
-    const contactsToShow = filteredContacts.slice(
-      currentPage * PAGE_SIZE,
-      (currentPage + 1) * PAGE_SIZE
-    );
-    const contacts = isFavorite ? favorites : contactsToShow;
-    const variant = isFavorite ? "favorite" : "default";
-    return contacts.length > 0 ? (
-      contacts.map((contact: IContact, index: number) => (
-        <ContactItem
-          variant={variant}
-          key={contact.id + index}
-          contact={contact}
-          onDelete={() => onDelete(contact.id)}
-          onViewDetail={() => handleOpenPopup(contact)}
-          onRemoveFav={() => removeFromFavorites(contact.id)}
-          onFavorite={() => addToFavorites(contact)}
-        />
-      ))
-    ) : (
-      <EmptyContact>Kontak kosong.</EmptyContact>
-    );
+    setCurrentPage(0);
   };
 
   useEffect(() => {
     syncStateWithLocalStorage(setContacts, setFavorites);
   }, []);
 
-  useEffect(()=>{
-    if(selectedContact ||showPopupAdd ){
-      document.body.style.overflow = 'hidden';
-    }else{
-      document.body.style.overflowY = 'scroll';
+  useEffect(() => {
+    getContacts();
+    syncStateWithLocalStorage(setContacts, setFavorites);
+  }, [getContacts]);
 
+  useEffect(() => {
+    if (data && data.contact) {
+      setContacts(data.contact);
+      localStorage.setItem("contacts", JSON.stringify(data.contact));
     }
+  }, [data]);
 
-  },[selectedContact,showPopupAdd])
+  useEffect(() => {
+    document.body.style.overflow =
+      selectedContact || showPopupAdd ? "hidden" : "scroll";
+  }, [selectedContact, showPopupAdd]);
 
-  if(getLoading){<LoadingState/>}
+  if (getLoading) {
+    <LoadingState />;
+  }
   if (error) return <EmptyContact>Maaf, gagal menampilkan kontak</EmptyContact>;
-  
+
   return (
-    <div css={{ position: "relative", maxWidth: "600px", margin: "auto"}}>
+    <div css={{ position: "relative", maxWidth: "600px", margin: "auto" }}>
       <div
         css={{ position: "sticky", top: 0, background: "white", zIndex: 10 }}
       >
@@ -215,36 +193,38 @@ const ContactList = () => {
         />
       </div>
       <>
-      {showPopupAdd && (
-        <NewContactForm
-          onClose={() => setShowPopupAdd(false)}
-          onAddContact={onNewContactSubmit}
-        />
-      )}
-      {tabs[activeTab] == "Kontak" ? (
-        <div>
-          <ContactItems />
-          <Pagination
-            currentPage={currentPage}
-            totalCount={filteredContacts.length}
-            pageSize={PAGE_SIZE}
-            onPageChange={handlePageChange}
+        {showPopupAdd && (
+          <NewContactForm
+            onClose={() => setShowPopupAdd(false)}
+            onAddContact={onNewContactSubmit}
           />
-        </div>
-      ) : (
-        <div>
-          <ContactItems isFavorite />
-        </div>
-      )}
-    {getLoading&&<EmptyContact>Loading...</EmptyContact>}
-      {selectedContact !== null && (
-        <ContactDetailPopup
-          isFavorite={activeTab == 1}
-          contact={selectedContact}
-          onClose={handleClosePopup}
-          onContactUpdated={editContactPhoneNumber}
-        />
-      )}
+        )}
+          <div>
+            <ContactItems 
+              isFavorite={tabs[activeTab] == "Favorit"}
+              contacts={{ filteredContacts, favorites }}
+              onDelete={onDelete}
+              onViewDetail={handleOpenPopup}
+              onRemoveFav={removeFromFavorites}
+              onFavorite={addToFavorites}
+            />
+           {tabs[activeTab] !== "Favorit" &&<Pagination
+              currentPage={currentPage}
+              totalCount={filteredContacts.length}
+              pageSize={PAGE_SIZE}
+              onPageChange={handlePageChange}
+            />}
+          </div>
+        
+        {getLoading && <EmptyContact>Loading...</EmptyContact>}
+        {selectedContact !== null && (
+          <ContactDetailPopup
+            isFavorite={activeTab == 1}
+            contact={selectedContact}
+            onClose={handleClosePopup}
+            onContactUpdated={editContactPhoneNumber}
+          />
+        )}
       </>
     </div>
   );
