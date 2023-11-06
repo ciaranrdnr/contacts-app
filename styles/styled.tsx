@@ -1,54 +1,60 @@
 /** @jsxImportSource @emotion/react */
-import { IPaginationStyledProps } from '@/components/pagination';
-import { ITabStyledProps } from '@/components/tab'
-import styled from '@emotion/styled'
-import { FaRegStar, FaStar, FaTrashAlt, FaArrowLeft, FaIdBadge, FaPlus } from 'react-icons/fa';
-
+import { IPaginationStyledProps } from "@/components/pagination";
+import { ITabStyledProps } from "@/components/tab";
+import styled from "@emotion/styled";
+import {
+  FaRegStar,
+  FaStar,
+  FaTrashAlt,
+  FaArrowLeft,
+  FaIdBadge,
+  FaPlus,
+} from "react-icons/fa";
 
 export const HeadingStyled = styled.h1`
-  color: ${(props)=> props.theme.colors.BK500};
+  color: ${(props) => props.theme.colors.BK500};
   font-weight: 700;
   font-size: 16px;
   line-height: 20px;
-`
+`;
 
 export const HeaderStyled = styled.div`
-  display: flex; 
+  display: flex;
   justify-content: space-between;
   padding: 0 16px;
-  border-bottom: 1px solid ${props=> props.theme.colors.NN300}
-`
+  border-bottom: 1px solid ${(props) => props.theme.colors.NN300};
+`;
 
 export const ButtonTextStyled = styled.button`
-  color: ${(props)=> props.theme.colors.GN500};
+  color: ${(props) => props.theme.colors.GN500};
   font-weight: 700;
   background: none;
   border: none;
   cursor: pointer;
-`
+`;
 
 export const SearchStyled = styled.div`
-display: flex; 
-align-items: center; 
-border: 1px solid; 
-padding: 8px;
-border-radius: ${(props)=> props.theme.radius};
-border-color: ${(props)=> props.theme.colors.NN200};
-margin: 12px 16px;
-`
+  display: flex;
+  align-items: center;
+  border: 1px solid;
+  padding: 8px;
+  border-radius: ${(props) => props.theme.radius};
+  border-color: ${(props) => props.theme.colors.NN200};
+  margin: 12px 16px;
+`;
 
 export const TabStyled = styled.button<ITabStyledProps>`
   flex-grow: 1;
   padding: 10px;
   border: none;
-  border-bottom: 3px solid transparent; 
+  border-bottom: 3px solid transparent;
   background-color: transparent;
   cursor: pointer;
   outline: none;
   font-weight: 700;
 
-  border-bottom: ${(props) => (props.isActive ? '3px solid green' : 'none')};
-  color: ${(props) => (props.isActive ? 'green' : 'grey')};
+  border-bottom: ${(props) => (props.isActive ? "3px solid green" : "none")};
+  color: ${(props) => (props.isActive ? "green" : "grey")};
 
   &:hover {
     color: green;
@@ -71,18 +77,18 @@ export const ContactItemWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;;
+  align-items: flex-start;
   background: white;
   padding: 10px;
   margin: 16px;
   border-radius: 5px;
-  border: 1px solid ${props=> props.theme.colors.NN200};
+  border: 1px solid ${(props) => props.theme.colors.NN200};
   margin-bottom: 10px;
   position: relative;
   cursor: pointer;
-   &:hover {
-    background: ${props=> props.theme.colors.GN50};
-    border: 1px solid ${props=> props.theme.colors.GN500};
+  &:hover {
+    background: ${(props) => props.theme.colors.GN50};
+    border: 1px solid ${(props) => props.theme.colors.GN500};
   }
   z-index: 0;
 `;
@@ -94,8 +100,8 @@ export const GreenAccent = styled.div`
   border-radius: 0 8px 8px 0;
   width: 4px;
   height: 24px;
-  background-color: ${props=>props.theme.colors.GN500}
-`
+  background-color: ${(props) => props.theme.colors.GN500};
+`;
 
 export const ContactInfo = styled.div`
   display: flex;
@@ -127,14 +133,14 @@ export const InnerButtonOutline = styled.button`
   font-weight: 700;
   margin-top: 16px;
   background-color: white;
-  color: ${prop=> prop.theme.colors.BK50};
+  color: ${(prop) => prop.theme.colors.BK50};
   &:hover {
     border-color: #888;
   }
 `;
 
 export const InnerButtonContain = styled.button`
-  background: ${prop=> prop.theme.colors.GN500};
+  background: ${(prop) => prop.theme.colors.GN500};
   border: 1px solid #ccc;
   padding: 8px 10px;
   border-radius: 5px;
@@ -143,8 +149,8 @@ export const InnerButtonContain = styled.button`
   font-weight: 700;
   margin-top: 16px;
   color: white;
-   &:disabled {
-    background-color: ${prop=> prop.theme.colors.NN300};
+  &:disabled {
+    background-color: ${(prop) => prop.theme.colors.NN300};
   }
 `;
 
@@ -171,9 +177,9 @@ export const FavoriteFilledIcon = styled(FaStar)`
 `;
 
 export const DeleteIcon = styled(FaTrashAlt)`
-  color: ${props=> props.theme.colors.BK50};
+  color: ${(props) => props.theme.colors.BK50};
   &:hover {
-    color: ${props=> props.theme.colors.GN500};
+    color: ${(props) => props.theme.colors.GN500};
   }
 `;
 
@@ -192,11 +198,12 @@ export const PaginationButton = styled.button<IPaginationStyledProps>`
   background: none;
   border: none;
   cursor: pointer;
-  color: ${(props) => (props.isCurrent ? props.theme.colors.GN500 : props.theme.colors.BK50)};
-  font-weight: ${(props) => (props.isCurrent ? '700' : '400')};
+  color: ${(props) =>
+    props.isCurrent ? props.theme.colors.GN500 : props.theme.colors.BK50};
+  font-weight: ${(props) => (props.isCurrent ? "700" : "400")};
   padding: 5px 10px;
   &:hover {
-    color: ${props=> !props.isCurrent && props.theme.colors.BK500};
+    color: ${(props) => !props.isCurrent && props.theme.colors.BK500};
   }
   &:disabled {
     cursor: default;
@@ -204,10 +211,9 @@ export const PaginationButton = styled.button<IPaginationStyledProps>`
   }
 `;
 export const CurrentPageText = styled.p`
-  color: ${(props) => (props.theme.colors.BK50)};
+  color: ${(props) => props.theme.colors.BK50};
   font-size: 12px;
 `;
-
 
 export const PopupOverlay = styled.div`
   position: fixed;
@@ -226,8 +232,8 @@ export const PopupContainer = styled.div`
   background: white;
   padding: 20px;
   border-radius: 5px;
-  width: 90%; 
-  max-width: 500px; 
+  width: 90%;
+  max-width: 500px;
   @media (max-width: 600px) {
     border-radius: 0;
     height: 100vh;
@@ -237,24 +243,27 @@ export const PopupContainer = styled.div`
 export const TitleBar = styled.div`
   display: flex;
   align-items: center;
-  margin: 20px 0;
+  margin-bottom: 20px;
   font-size: 16px;
   font-weight: 700;
   position: relative;
+  @media (max-width: 600px) {
+    margin: 20px 0;
+  }
 `;
 
 export const FieldContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0px 1px 6px ${props=>props.theme.colors.NN200};
+  box-shadow: 0px 1px 6px ${(props) => props.theme.colors.NN200};
   border-radius: 10px;
   padding: 15px;
   margin: 8px 0;
 `;
 
 export const ButtonTextSmall = styled.button`
-  color: ${props=> props.theme.colors.GN500};
+  color: ${(props) => props.theme.colors.GN500};
   background-color: white;
   font-size: 12px;
   border: none;
@@ -265,33 +274,32 @@ export const ButtonTextSmall = styled.button`
 export const BackButton = styled(FaArrowLeft)`
   cursor: pointer;
   margin-right: 10px;
-  color: ${props=> props.theme.colors.BK50};
-  @media (min-width: 600px){
+  color: ${(props) => props.theme.colors.BK50};
+  @media (min-width: 600px) {
     display: none;
   }
 `;
 export const CloseButton = styled(FaPlus)`
   cursor: pointer;
   margin-right: 10px;
-  position: absolute;;
+  position: absolute;
   right: 0;
   transform: rotate(45deg);
-  color: ${props=> props.theme.colors.BK50};
-  @media (max-width: 600px){
+  color: ${(props) => props.theme.colors.BK50};
+  @media (max-width: 600px) {
     display: none;
   }
 `;
 
-
 export const LabelStyled = styled.label`
-    font-size: 12px;
-    color: ${props=> props.theme.colors.BK50};
+  font-size: 12px;
+  color: ${(props) => props.theme.colors.BK50};
 `;
 
 export const NameStyled = styled.p`
-    margin: 0;
-    font-size: 12px;
-    color: ${props=> props.theme.colors.BK50};
+  margin: 0;
+  font-size: 12px;
+  color: ${(props) => props.theme.colors.BK50};
 `;
 
 export const ContactEditContainer = styled.div`
@@ -328,25 +336,33 @@ export const Label = styled.label`
 
 export const Input = styled.input`
   outline: none;
-  border:none;
+  border: none;
   border-bottom: 1px solid #ccc;
   padding: 8px;
   width: 100%;
   font-size: 16px;
-   &:focus { 
+  &:focus {
     border-bottom: 1px solid #4caf50;
   }
 `;
 
 export const PhoneNumberInput = styled(Input)`
   padding-right: 40px;
+  /* Chrome, Safari, Edge, Opera */
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  -moz-appearance: textfield;
 `;
 
 export const ContactIcon = styled(FaIdBadge)`
   position: relative;
   transform: translateX(-24px);
 `;
-
 
 export const Divider = styled.div`
   display: flex;

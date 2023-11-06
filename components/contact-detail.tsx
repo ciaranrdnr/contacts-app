@@ -106,6 +106,7 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
 
   const handleEdit = (index?: number) => {
     setEditingIndex(index ?? 0);
+    setEditName(false)
   };
 
   const handleSave = async (index: number) => {
@@ -190,7 +191,7 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
     return (
       <>
         <LabelStyled>Nama Lengkap</LabelStyled>
-        <FieldContainer onClick={() => setEditName(true)}>
+        <FieldContainer onClick={() => {setEditName(true); handleCancel()}}>
           <NameStyled>{`${currentContact.first_name} ${currentContact.last_name}`}</NameStyled>
           {!isFavorite && (
             <ButtonTextSmall >
