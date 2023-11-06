@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import ContactList from '@/components/contact-list'
 import { Global, ThemeProvider } from '@emotion/react';
-import { globalStyles } from '@/styles/globals';
+import { globalStyles, mainStyles } from '@/styles/globals';
 import { theme } from '@/styles/theme';
 
 
@@ -18,7 +18,7 @@ const Home=()=> {
         <link href={googleLink} rel="stylesheet" />
       </Head>
        <Global styles={globalStyles} />
-      <main>
+      <main css={mainStyles}>
         <ThemeProvider theme={theme}>
          <ContactList />
         </ThemeProvider>

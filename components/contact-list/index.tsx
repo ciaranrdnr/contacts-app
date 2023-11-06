@@ -28,7 +28,7 @@ import {
   EmptyContact,
   HeaderStyled,
   HeadingStyled,
-} from "@/styles/contact-list";
+} from "@/styles/styled";
 
 import { css } from "@emotion/react";
 import Tabs from "../tab";

@@ -11,7 +11,7 @@ import {
   InputPhoneWrapper,
   LabelStyled,
   PhoneNumberInput,
-} from "@/styles/contact-list";
+} from "@/styles/styled";
 
 interface IAddphoneNumberProps {
   contactId: number;

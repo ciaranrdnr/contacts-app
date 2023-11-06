@@ -1,11 +1,11 @@
+/** @jsxImportSource @emotion/react */
 import {
   CurrentPageText,
   PaginationButton,
   PaginationContainer,
-} from "@/styles/contact-list";
+} from "@/styles/styled";
 import { ButtonHTMLAttributes } from "react";
 
-/** @jsxImportSource @emotion/react */
 interface IPaginationProps {
   currentPage: number;
   pageSize: number;
@@ -33,19 +33,23 @@ const Pagination = ({
 
   return (
     <PaginationContainer>
-      <CurrentPageText>{totalCount} Items |</CurrentPageText>
-      <PaginationButton
-        onClick={() => onPageChange(0)}
-        disabled={currentPage === 0}
-      >
-        «
-      </PaginationButton>
-      <PaginationButton
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 0}
-      >
-        ‹
-      </PaginationButton>
+      {totalPages > 1 && (
+        <>
+          <CurrentPageText>{totalCount} Items |</CurrentPageText>
+          <PaginationButton
+            onClick={() => onPageChange(0)}
+            disabled={currentPage === 0}
+          >
+            «
+          </PaginationButton>
+          <PaginationButton
+            onClick={() => onPageChange(currentPage - 1)}
+            disabled={currentPage === 0}
+          >
+            ‹
+          </PaginationButton>
+        </>
+      )}
       {range(1, totalPages).map((number) => (
         <PaginationButton
           isCurrent={currentPage == number - 1}
@@ -56,24 +60,27 @@ const Pagination = ({
           {number}
         </PaginationButton>
       ))}
+      {totalPages > 1 && (
+        <>
+          <PaginationButton
+            onClick={() => onPageChange(currentPage + 1)}
+            disabled={currentPage >= totalPages - 1}
+          >
+            ›
+          </PaginationButton>
 
-      <PaginationButton
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage >= totalPages - 1}
-      >
-        ›
-      </PaginationButton>
+          <PaginationButton
+            onClick={() => onPageChange(totalPages - 1)}
+            disabled={currentPage >= totalPages - 1}
+          >
+            »
+          </PaginationButton>
 
-      <PaginationButton
-        onClick={() => onPageChange(totalPages - 1)}
-        disabled={currentPage >= totalPages - 1}
-      >
-        »
-      </PaginationButton>
-
-      <CurrentPageText>
-        | Page {currentPage + 1} of {totalPages}
-      </CurrentPageText>
+          <CurrentPageText>
+            | Page {currentPage + 1} of {totalPages}
+          </CurrentPageText>
+        </>
+      )}
     </PaginationContainer>
   );
 };

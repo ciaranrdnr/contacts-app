@@ -10,6 +10,7 @@ import {
   BackButton,
   ButtonFullwidth,
   ButtonTextSmall,
+  CloseButton,
   ContactEditContainer,
   ContactIcon,
   FieldContainer,
@@ -26,7 +27,7 @@ import {
   PopupContainer,
   PopupOverlay,
   TitleBar,
-} from "@/styles/contact-list";
+} from "@/styles/styled";
 
 interface IContactDetailPopupProps {
   contact: IContact;
@@ -98,11 +99,9 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
   };
 
   const handlePhoneChange = (index: number, newNumber: any) => {
-    if (typeof newNumber == "number") {
       const newPhoneNumbers = [...phoneNumbers];
       newPhoneNumbers[index] = `${newNumber}`;
       setPhoneNumbers(newPhoneNumbers);
-    }
   };
 
   const handleEdit = (index?: number) => {
@@ -191,10 +190,10 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
     return (
       <>
         <LabelStyled>Nama Lengkap</LabelStyled>
-        <FieldContainer>
+        <FieldContainer onClick={() => setEditName(true)}>
           <NameStyled>{`${currentContact.first_name} ${currentContact.last_name}`}</NameStyled>
           {!isFavorite && (
-            <ButtonTextSmall onClick={() => setEditName(true)}>
+            <ButtonTextSmall >
               Ubah
             </ButtonTextSmall>
           )}
@@ -212,7 +211,7 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
               <InputPhoneWrapper>
                 <InputPhoneGroup>
                   <PhoneNumberInput
-                    type="tel"
+                    type="number"
                     ref={editingIndex === index ? activeInputRef : null}
                     id={"phoneNumber-" + { editingIndex }}
                     value={phoneNumbers[editingIndex]}
@@ -226,10 +225,10 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
             </ContactEditContainer>
           </>
         ) : (
-          <FieldContainer>
+          <FieldContainer onClick={() => handleEdit(index)}>
             <NameStyled>{`${phone}`}</NameStyled>
             {!isFavorite && (
-              <ButtonTextSmall onClick={() => handleEdit(index)}>
+              <ButtonTextSmall >
                 Ubah
               </ButtonTextSmall>
             )}
@@ -247,7 +246,7 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
         popupContentRef.current &&
         !popupContentRef.current.contains(event.target as Node)
       ) {
-        onClose(); // Close the popup if clicked outside of the popup content
+        onClose(); 
       }
     };
 
@@ -264,11 +263,12 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
           <TitleBar>
             <BackButton onClick={onClose} />
             <span>{isEditing ? "Edit" : "Detail"} Kontak</span>
+            <CloseButton onClick={onClose} />
           </TitleBar>
           {renderNameFields()}
           <div>
             <LabelStyled>Nomor HP</LabelStyled>
-            {!isFavorite && (
+            {!isEditing && !isFavorite && (
               <ButtonTextSmall onClick={() => setAddingNumber(true)}>
                 Tambah Nomor
               </ButtonTextSmall>
@@ -276,19 +276,20 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
           </div>
           {renderPhoneNumbers()}
           {error && <p>Error updating contact.</p>}
-          <AddPhoneNumber
-            addingNumber={addingNumber}
-            onCloseAdd={(e) => setAddingNumber(e)}
-            contactId={contact.id}
-            onNumberAdded={handleNumberAdded}
-          />
-          {isEditing && (
+         
+          {isEditing ? (
             <ButtonFullwidth>
               <InnerButtonContain onClick={handleEditSave}>
                 {loading ? "Loading..." : "Simpan"}
               </InnerButtonContain>
             </ButtonFullwidth>
-          )}
+          ):
+           <AddPhoneNumber
+            addingNumber={addingNumber}
+            onCloseAdd={(e) => setAddingNumber(e)}
+            contactId={contact.id}
+            onNumberAdded={handleNumberAdded}
+          />}
         </PopupContainer>
       </PopupOverlay>
     </>

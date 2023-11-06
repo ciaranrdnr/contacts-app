@@ -2,7 +2,7 @@
 import { IPaginationStyledProps } from '@/components/pagination';
 import { ITabStyledProps } from '@/components/tab'
 import styled from '@emotion/styled'
-import { FaRegStar, FaStar, FaTrashAlt, FaArrowLeft, FaIdBadge } from 'react-icons/fa';
+import { FaRegStar, FaStar, FaTrashAlt, FaArrowLeft, FaIdBadge, FaPlus } from 'react-icons/fa';
 
 
 export const HeadingStyled = styled.h1`
@@ -185,6 +185,7 @@ export const PaginationContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
+  margin-bottom: 16px;
 `;
 
 export const PaginationButton = styled.button<IPaginationStyledProps>`
@@ -227,14 +228,19 @@ export const PopupContainer = styled.div`
   border-radius: 5px;
   width: 90%; 
   max-width: 500px; 
+  @media (max-width: 600px) {
+    border-radius: 0;
+    height: 100vh;
+  }
 `;
 
 export const TitleBar = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 20px 0;
   font-size: 16px;
   font-weight: 700;
+  position: relative;
 `;
 
 export const FieldContainer = styled.div`
@@ -260,7 +266,22 @@ export const BackButton = styled(FaArrowLeft)`
   cursor: pointer;
   margin-right: 10px;
   color: ${props=> props.theme.colors.BK50};
+  @media (min-width: 600px){
+    display: none;
+  }
 `;
+export const CloseButton = styled(FaPlus)`
+  cursor: pointer;
+  margin-right: 10px;
+  position: absolute;;
+  right: 0;
+  transform: rotate(45deg);
+  color: ${props=> props.theme.colors.BK50};
+  @media (max-width: 600px){
+    display: none;
+  }
+`;
+
 
 export const LabelStyled = styled.label`
     font-size: 12px;

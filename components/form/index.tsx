@@ -16,7 +16,7 @@ import {
   PopupContainer,
   PopupOverlay,
   TitleBar,
-} from "@/styles/contact-list";
+} from "@/styles/styled";
 import React, { useEffect, useRef, useState } from "react";
 
 interface INewContactFormProps {
@@ -164,57 +164,6 @@ const NewContactForm = ({ onAddContact, onClose }: INewContactFormProps) => {
             </ButtonFullwidth>
           </PopupContainer>
         </PopupOverlay>
-      </form>
-
-      <h2>Add New Contact</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          First Name:
-          <input
-            type="text"
-            name="first_name"
-            value={newContact.first_name}
-            onChange={(e) => handleInputChange(e, 0)}
-            required
-          />
-        </label>
-        <label>
-          Last Name:
-          <input
-            type="text"
-            name="last_name"
-            value={newContact.last_name}
-            onChange={(e) => handleInputChange(e, 0)}
-            required
-          />
-        </label>
-        {newContact.phones.map((phone: any, index: number) => (
-          <div key={index}>
-            <label>
-              Phone {index + 1} (+62)
-              <input
-                type="number"
-                name="phone"
-                value={phone}
-                placeholder="81281234567"
-                onChange={(e) => handleInputChange(e, index)}
-                required={index === 0}
-              />
-            </label>
-            {index !== 0 && (
-              <button type="button" onClick={() => handleRemovePhone(index)}>
-                Remove
-              </button>
-            )}
-          </div>
-        ))}
-        <button type="button" onClick={handleAddPhone}>
-          Add Phone
-        </button>
-        <br />
-        <button type="submit" disabled={!isFormValid()}>
-          Submit Contact
-        </button>
       </form>
     </>
   );

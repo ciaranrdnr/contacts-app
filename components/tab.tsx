@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { TabContainerStyled, TabStyled } from "@/styles/contact-list";
+import { TabContainerStyled, TabStyled } from "@/styles/styled";
 import { ButtonHTMLAttributes } from "react";
 
 interface ITabProps {

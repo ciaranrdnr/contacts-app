@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FaSistrix } from "react-icons/fa";
 import { css, useTheme } from "@emotion/react";
-import { SearchStyled } from "@/styles/contact-list";
+import { SearchStyled } from "@/styles/styled";
 
 interface ISearchProps {
   onSearch: (e: string) => void;

@@ -14,7 +14,7 @@ import {
   FavoriteIcon,
   GreenAccent,
   InnerButtonOutline,
-} from "@/styles/contact-list";
+} from "@/styles/styled";
 
 interface IContactItemProps {
   contact: IContact;
