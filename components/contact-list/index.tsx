@@ -32,6 +32,7 @@ import {
 
 import { css } from "@emotion/react";
 import Tabs from "../tab";
+import LoadingState from "../loading-state";
 
 const ContactList = () => {
   const PAGE_SIZE = 5;
@@ -183,13 +184,16 @@ const ContactList = () => {
   useEffect(()=>{
     if(selectedContact ||showPopupAdd ){
       document.body.style.overflow = 'hidden';
+    }else{
+      document.body.style.overflowY = 'scroll';
+
     }
+
   },[selectedContact,showPopupAdd])
 
-
-  if (getLoading) return <EmptyContact>Loading...</EmptyContact>;
-  if (error) return <p>Maaf, gagal menampilkan kontak</p>;
-
+  if(getLoading){<LoadingState/>}
+  if (error) return <EmptyContact>Maaf, gagal menampilkan kontak</EmptyContact>;
+  
   return (
     <div css={{ position: "relative", maxWidth: "600px", margin: "auto"}}>
       <div
@@ -210,6 +214,7 @@ const ContactList = () => {
           }}
         />
       </div>
+      <>
       {showPopupAdd && (
         <NewContactForm
           onClose={() => setShowPopupAdd(false)}
@@ -231,7 +236,7 @@ const ContactList = () => {
           <ContactItems isFavorite />
         </div>
       )}
-
+    {getLoading&&<EmptyContact>Loading...</EmptyContact>}
       {selectedContact !== null && (
         <ContactDetailPopup
           isFavorite={activeTab == 1}
@@ -240,6 +245,7 @@ const ContactList = () => {
           onContactUpdated={editContactPhoneNumber}
         />
       )}
+      </>
     </div>
   );
 };
