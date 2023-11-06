@@ -26,13 +26,13 @@ export const handleAddContactComplete = (
 
 export const handleAddContactError = (error: { message: string }) => {
   if (error.message.includes("unique constraint")) {
-    alert("This contact name is already in use. Please use a different name.");
+    alert("Nama kontak sudah terdaftar, tambahkan nama lainnya.");
   } else if (error.message.includes("special characters")) {
     alert(
-      "The contact name contains special characters. Please use only letters and numbers."
+      "Nama kontak hanya bisa alfanumerik."
     );
   } else {
-    console.error("Error adding contact", error);
+    console.error("Gagal menambahkan kontak.", error);
   }
 };
 export const handleNewContactSubmit = async (
@@ -44,13 +44,13 @@ export const handleNewContactSubmit = async (
   const { first_name, last_name, phones } = newContactData;
   if (!/^[A-Za-z0-9 ]+$/.test(first_name)) {
     alert(
-      "The contact name contains special characters. Please use only letters and numbers."
+      "Nama kontak hanya bisa alfanumerik."
     );
     return;
   }
 
   if (contacts.some((contact) => contact.first_name === first_name)) {
-    alert("This contact name already exists. Please use a unique name.");
+    alert("Nama kontak sudah terdaftar, tambahkan nama lainnya.");
     return;
   }
 
@@ -68,7 +68,7 @@ export const handleNewContactSubmit = async (
       phones: [""],
     });
   } catch (error) {
-    console.error("Error while adding new contact", error);
+    console.error("Gagal menambahkan kontak.", error);
   }
 };
 

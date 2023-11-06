@@ -78,6 +78,9 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
   const [updatePhoneNumber, { loading, error }] = useMutation(EDIT_QUERY.PHONE);
 
   const isEditing = editingIndex !== null || editName;
+  const textErrorAddingPhone = "Gagal menambahkan nomor";
+  const textAddingPhone = "Tambah Nomor";
+  const textTitleSection = `${isEditing ? "Edit" : "Detail"} Kontak`;
 
   const handleSaveName = async () => {
     try {
@@ -99,14 +102,14 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
   };
 
   const handlePhoneChange = (index: number, newNumber: any) => {
-      const newPhoneNumbers = [...phoneNumbers];
-      newPhoneNumbers[index] = `${newNumber}`;
-      setPhoneNumbers(newPhoneNumbers);
+    const newPhoneNumbers = [...phoneNumbers];
+    newPhoneNumbers[index] = `${newNumber}`;
+    setPhoneNumbers(newPhoneNumbers);
   };
 
   const handleEdit = (index?: number) => {
     setEditingIndex(index ?? 0);
-    setEditName(false)
+    setEditName(false);
   };
 
   const handleSave = async (index: number) => {
@@ -191,13 +194,14 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
     return (
       <>
         <LabelStyled>Nama Lengkap</LabelStyled>
-        <FieldContainer onClick={() => {setEditName(true); handleCancel()}}>
+        <FieldContainer
+          onClick={() => {
+            setEditName(true);
+            handleCancel();
+          }}
+        >
           <NameStyled>{`${currentContact.first_name} ${currentContact.last_name}`}</NameStyled>
-          {!isFavorite && (
-            <ButtonTextSmall >
-              Ubah
-            </ButtonTextSmall>
-          )}
+          {!isFavorite && <ButtonTextSmall>Ubah</ButtonTextSmall>}
         </FieldContainer>
       </>
     );
@@ -228,11 +232,7 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
         ) : (
           <FieldContainer onClick={() => handleEdit(index)}>
             <NameStyled>{`${phone}`}</NameStyled>
-            {!isFavorite && (
-              <ButtonTextSmall >
-                Ubah
-              </ButtonTextSmall>
-            )}
+            {!isFavorite && <ButtonTextSmall>Ubah</ButtonTextSmall>}
           </FieldContainer>
         )}
       </div>
@@ -247,7 +247,7 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
         popupContentRef.current &&
         !popupContentRef.current.contains(event.target as Node)
       ) {
-        onClose(); 
+        onClose();
       }
     };
 
@@ -257,13 +257,14 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onClose]);
+
   return (
     <>
       <PopupOverlay>
         <PopupContainer ref={popupContentRef}>
           <TitleBar>
             <BackButton onClick={onClose} />
-            <span>{isEditing ? "Edit" : "Detail"} Kontak</span>
+            <span>{textTitleSection}</span>
             <CloseButton onClick={onClose} />
           </TitleBar>
           {renderNameFields()}
@@ -271,26 +272,27 @@ const ContactDetailPopup: React.FC<IContactDetailPopupProps> = ({
             <LabelStyled>Nomor HP</LabelStyled>
             {!isEditing && !isFavorite && (
               <ButtonTextSmall onClick={() => setAddingNumber(true)}>
-                Tambah Nomor
+                {textAddingPhone}
               </ButtonTextSmall>
             )}
           </div>
           {renderPhoneNumbers()}
-          {error && <p>Error updating contact.</p>}
-         
+          {error && <p>{textErrorAddingPhone}</p>}
+
           {isEditing ? (
             <ButtonFullwidth>
               <InnerButtonContain onClick={handleEditSave}>
                 {loading ? "Loading..." : "Simpan"}
               </InnerButtonContain>
             </ButtonFullwidth>
-          ):
-           <AddPhoneNumber
-            addingNumber={addingNumber}
-            onCloseAdd={(e) => setAddingNumber(e)}
-            contactId={contact.id}
-            onNumberAdded={handleNumberAdded}
-          />}
+          ) : (
+            <AddPhoneNumber
+              addingNumber={addingNumber}
+              onCloseAdd={(e) => setAddingNumber(e)}
+              contactId={contact.id}
+              onNumberAdded={handleNumberAdded}
+            />
+          )}
         </PopupContainer>
       </PopupOverlay>
     </>
